@@ -1,0 +1,9 @@
+72 18 16  oim $18, $16 # set bits 0x10 and 0x08 to 1 (output) in POB_DDR6 register
+71 18 17  aim $18, $17 # set bits other than 0x10 and 0x08 to 0 in POB_PORT6 register - this is active-low, so only bits 0x10 (CS2) and 0x08 (CS1) are switched off - this enables the top slot and disables the other 2 slots
+71 00 01  aim 0, $01 # set POB_DDR2 to 0 (input mode on port 2)
+96 03     ld a, ($03) # read from port 2 into A
+c6 00     ld b, 0
+36        push a
+37        push b
+38        pull x # make a 2-word value out of a 0 and the byte we read
+39        rts
